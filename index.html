@@ -1,9 +1,88 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
 <head>
-	<title>我的</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+	<title>日鲜镖局配送区域</title>
+	<link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css"/>
+	<script src="http://cache.amap.com/lbs/static/es5.min.js"></script>
+	<style type="text/css">
+		.amap-marker-label{
+			width: 60px;
+			font-size: 16px;
+			line-height: 18px;
+			text-align: center;
+			height: 18px;
+			font-family: STLiti;
+			color: green;
+			border-radius: 15px;
+			background-color: rgba(255,255,255,0.4);
+			border: solid 2px rgba(100,255,200,0.8);
+		}
+	</style>
+	<script src="https://webapi.amap.com/maps?v=1.4.15&key=86ae090a864129f453d5c4f7bb1110b3&plugin=Map3D,ElasticMarker,AMap.Autocomplete,AMap.PlaceSearch"></script>
+	<script type="text/javascript" src='https://a.amap.com/jsapi_demos/static/resource/js/tiantan.js'></script>
+	<script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
+
 </head>
 <body>
-	myproject
+	<div id="container" ></div>
+	<div id="myPageTop">
+		<table>
+			<tr>
+				<td>
+					<label>请输入关键字：</label>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input id="tipinput"/>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<script>
+    //缩放地图看看！！！
+    var map = new AMap.Map('container', {
+        // viewMode:'3D',
+        // turboMode:false,
+        // showIndoorMap:false,
+        defaultCursor:'pointer',
+        // showBuildingBlock:false,
+        zooms:[10,16],
+        // showLabel:false,
+        zoom:12,
+        // pitch:55,
+        center:[118.784407,32.041893],
+        forceVector:true,
+    });
+    
+
+    new AMap.Polygon({
+    	cursor:'pointer',
+    	bubble:true,
+    	path:[[118.652228,31.964012],[118.675574,31.942456],[118.686904,31.932258],[118.6948,31.917106],[118.711623,31.906323],[118.733252,31.88417],[118.759345,31.876881],[118.779944,31.876881],[118.809813,31.8728],[118.834189,31.879797],[118.843802,31.886793],[118.889121,31.949156],[118.900794,31.994881],[118.913154,32.012059],[118.932723,32.034181],[118.956069,32.078409],[118.955039,32.106041],[118.949202,32.122616],[118.953666,32.136862],[118.947829,32.145293],[118.941993,32.14413],[118.935469,32.145583],[118.912124,32.133664],[118.893241,32.134246],[118.867835,32.131629],[118.856849,32.127268],[118.843459,32.157501],[118.816336,32.146746],[118.784751,32.126977],[118.751792,32.112148],[118.734626,32.09179],[118.728103,32.05397],[118.704757,32.02021],[118.7051,31.996046],[118.664245,31.977118],[118.652228,31.964012]],
+    	map:map,
+    	fillOpacity:0.3,
+    	strokeWeight:1,
+    	fillColor:'green'
+    })
+     //输入提示
+     var autoOptions = {
+     	input: "tipinput"
+     };
+     var auto = new AMap.Autocomplete(autoOptions);
+     var placeSearch = new AMap.PlaceSearch({
+     	map: map
+    });  //构造地点查询类
+    AMap.event.addListener(auto, "select", select);//注册监听，当选中某条记录时会触发
+    function select(e) {
+    	placeSearch.setCity(e.poi.adcode);
+        placeSearch.search(e.poi.name);  //关键字查询查询
+    }
+    
+</script>
+
 </body>
-</html>>
+</html>
