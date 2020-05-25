@@ -22,12 +22,12 @@
 		}
 	</style>
 	<script src="https://webapi.amap.com/maps?v=1.4.15&key=1683ad21b5018772153568b300635e2b&plugin=Map3D,ElasticMarker,AMap.Autocomplete,AMap.PlaceSearch"></script>
-	<script type="text/javascript" src='https://a.amap.com/jsapi_demos/static/resource/js/tiantan.js'></script>
+	<!-- <script type="text/javascript" src='https://a.amap.com/jsapi_demos/static/resource/js/tiantan.js'></script> -->
 	<script type="text/javascript" src="https://cache.amap.com/lbs/static/addToolbar.js"></script>
 
 </head>
 <body>
-<!-- http://developer.amap.com/api/javascript-api/example/poi-search/keywords-search -->
+	<!-- http://developer.amap.com/api/javascript-api/example/poi-search/keywords-search -->
 	<div id="container" ></div>
 	<div id="myPageTop">
 		<table>
@@ -46,6 +46,7 @@
 	<script>
     //缩放地图看看！！！
     var map = new AMap.Map('container', {
+    	mapStyle: 'amap://styles/fresh',
         // viewMode:'3D',
         // turboMode:false,
         // showIndoorMap:false,
@@ -59,16 +60,38 @@
         forceVector:true,
     });
 
+    var outer = [
+    new AMap.LngLat(-360,90,true),
+    new AMap.LngLat(-360,-90,true),
+    new AMap.LngLat(360,-90,true),
+    new AMap.LngLat(360,90,true),
+    ];
 
-    new AMap.Polygon({
-    	cursor:'pointer',
-    	bubble:true,
-    	path:[[118.652228,31.964012],[118.675574,31.942456],[118.686904,31.932258],[118.6948,31.917106],[118.711623,31.906323],[118.733252,31.88417],[118.759345,31.876881],[118.779944,31.876881],[118.809813,31.8728],[118.834189,31.879797],[118.843802,31.886793],[118.889121,31.949156],[118.900794,31.994881],[118.913154,32.012059],[118.932723,32.034181],[118.956069,32.078409],[118.955039,32.106041],[118.949202,32.122616],[118.953666,32.136862],[118.947829,32.145293],[118.941993,32.14413],[118.935469,32.145583],[118.912124,32.133664],[118.893241,32.134246],[118.867835,32.131629],[118.856849,32.127268],[118.843459,32.157501],[118.816336,32.146746],[118.784751,32.126977],[118.751792,32.112148],[118.734626,32.09179],[118.728103,32.05397],[118.704757,32.02021],[118.7051,31.996046],[118.664245,31.977118],[118.652228,31.964012]],
+    var inner = [
+    [118.652228,31.964012],[118.675574,31.942456],[118.686904,31.932258],[118.6948,31.917106],[118.711623,31.906323],[118.733252,31.88417],[118.759345,31.876881],[118.779944,31.876881],[118.809813,31.8728],[118.834189,31.879797],[118.843802,31.886793],[118.889121,31.949156],[118.900794,31.994881],[118.913154,32.012059],[118.932723,32.034181],[118.956069,32.078409],[118.955039,32.106041],[118.949202,32.122616],[118.953666,32.136862],[118.947829,32.145293],[118.941993,32.14413],[118.935469,32.145583],[118.912124,32.133664],[118.893241,32.134246],[118.867835,32.131629],[118.856849,32.127268],[118.843459,32.157501],[118.816336,32.146746],[118.784751,32.126977],[118.751792,32.112148],[118.734626,32.09179],[118.728103,32.05397],[118.704757,32.02021],[118.7051,31.996046],[118.664245,31.977118],[118.652228,31.964012]
+    ];
+
+
+    var pathArray = [
+    	outer
+    ];
+
+    pathArray.push(inner)
+
+    var polygon = new AMap.Polygon({
+    	// cursor:'pointer',
+    	// bubble:true,
+    	path:pathArray,
     	map:map,
     	fillOpacity:0.3,
     	strokeWeight:1,
-    	fillColor:'green'
+    	fillColor:'blue'
     })
+
+     // polygon.setPath(pathArray);
+     // map.add(polygon);
+     // map.setFitView();
+
      //输入提示
      var autoOptions = {
      	input: "tipinput"
@@ -82,6 +105,7 @@
     	placeSearch.setCity(e.poi.adcode);
         placeSearch.search(e.poi.name);  //关键字查询查询
     }
+
 
 </script>
 
